@@ -1,0 +1,25 @@
+@import '../../variables';
+
+.App {
+  background-color: $white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding: 0px 20px;
+}
+
+.logo {
+  color: $navy;
+  font-family: 'Permanent Marker', cursive;
+  margin: 0px;
+  font-size: 2.5rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+

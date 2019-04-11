@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Paragraph from '../Paragraph/Paragraph'
+import shortid from 'shortid'
 
 export class Item extends Component {
   constructor(props) {
@@ -20,7 +22,9 @@ export class Item extends Component {
     let displayDetail
     
     if (this.state.display === true) {
-      displayDetail = detail
+      displayDetail = detail.map(paragraph => 
+        <Paragraph key={shortid.generate()} para={paragraph.para} />
+        )
     } 
 
     return (

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
-import './App.css';
+import './_App.scss';
+import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
 
@@ -10,6 +11,21 @@ class App extends Component {
     this.state = {
       rights: [],
       scenarios: [],
+      intro: [],
+      help: [],
+    }
+  }
+
+  async componentDidMount() {
+    const url = 'http://localhost:3001/api/v1/intro'
+    try {
+      const response = await fetch(url)
+      const intro = await response.json()
+      this.setState({
+        intro
+      })
+    } catch (error) {
+      return error.message
     }
   }
 
@@ -19,6 +35,10 @@ class App extends Component {
 
   getScenarios = () => {
     this.fetchScenarios()
+  }
+
+  getHelp = () => {
+    this.fetchHelp()
   }
 
   fetchRights = async () => {
@@ -47,20 +67,47 @@ class App extends Component {
     }
   }
 
+  fetchHelp = async () => {
+    const url = 'http://localhost:3001/api/v1/help'
+    try {
+      const response = await fetch(url)
+      const help = await response.json()
+      this.setState({
+        help
+      })
+    } catch (error) {
+      return error.message
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          BorderHelp
+        <header className='header'>
+          <h1 className='logo'>BorderHelp</h1>
         </header>
-        <Route 
-          path='/'
-          render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} />}
-        />
-        <Route 
-          path='/rights'
-          render={() => <Category data={this.state.rights} />}
-        />
+          <Route 
+            path='/'
+            render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp}/>}
+          />
+          <div className='container'>
+          <Route 
+            exact path='/'
+            render={() => <Intro />}
+            />
+          <Route 
+            path='/rights'
+            render={() => <Category data={this.state.rights} />}
+          />
+          <Route 
+            path='/what-to-do'
+            render={() => <Category data={this.state.scenarios} />}
+          />
+          <Route 
+            path='/help'
+            render={() => <Category data={this.state.help} />}
+          />
+        </div>
       </div>
     );
   }
