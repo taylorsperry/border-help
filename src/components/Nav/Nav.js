@@ -1,10 +1,21 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-export const Nav = () => {
+export const Nav = ( {getRights, getScenarios} ) => {
   return (
     <div>
-      <div>Your Rights</div>
-      <div>What to Do</div>
+      <NavLink 
+        onClick={getRights}
+        exact to='/rights'
+      >
+        Your Rights
+      </NavLink>
+      <NavLink
+        onClick={getScenarios}
+        exact to='/scenarios'
+      >
+      What to Do
+      </NavLink>
       <div>Help</div>
     </div>
   )
