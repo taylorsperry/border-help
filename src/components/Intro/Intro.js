@@ -1,8 +1,14 @@
 import React from 'react'
 
-export const Intro = () => {
+export const Intro = ({data}) => {
+  
+  const displayIntro = data.map(paragraph => 
+    <p>{paragraph.para}</p>
+    )
   return(
-    <div>intro</div>
+    <div>
+    {displayIntro}
+    </div>
   )
 }
 

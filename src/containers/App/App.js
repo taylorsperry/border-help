@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { withRouter, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 import './_App.scss';
+import { storeIntro, storeRights, storeScenarios, storeHelp } from '../../actions/'
 import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
@@ -21,24 +23,37 @@ class App extends Component {
     try {
       const response = await fetch(url)
       const intro = await response.json()
-      this.setState({
-        intro
-      })
+      this.props.storeIntro(intro)
     } catch (error) {
       return error.message
     }
   }
 
   getRights = () => {
-    this.fetchRights()
+    const { history, rights } = this.props
+    if (!rights.length) {
+      this.fetchRights()
+    } else {
+      history.push('/rights')
+    }
   }
 
   getScenarios = () => {
-    this.fetchScenarios()
+    const { history, scenarios } = this.props
+    if (!scenarios.length) {
+      this.fetchScenarios()
+    } else {
+      history.push('/scenarios')
+    }
   }
 
   getHelp = () => {
-    this.fetchHelp()
+    const { history, help } = this.props
+    if (!help.length) {
+      this.fetchHelp()
+    } else {
+      history.push('/help')
+    }
   }
 
   fetchRights = async () => {
@@ -46,9 +61,7 @@ class App extends Component {
     try {
       const response = await fetch(url)
       const rights = await response.json()
-      this.setState({
-        rights,
-      })
+      this.props.storeRights(rights)
     } catch (error) {
       return error.message
     }
@@ -59,9 +72,7 @@ class App extends Component {
     try {
       const response = await fetch(url)
       const scenarios = await response.json()
-      this.setState({
-        scenarios,
-      })
+      this.props.storeScenarios(scenarios)
     } catch (error) {
       return error.message
     }
@@ -72,15 +83,14 @@ class App extends Component {
     try {
       const response = await fetch(url)
       const help = await response.json()
-      this.setState({
-        help
-      })
+      this.props.storeHelp(help)
     } catch (error) {
       return error.message
     }
   }
 
   render() {
+    const { intro, rights, scenarios, help } = this.props
     return (
       <div className="App">
         <header className='header'>
@@ -93,19 +103,19 @@ class App extends Component {
           <div className='container'>
           <Route 
             exact path='/'
-            render={() => <Intro />}
+            render={() => <Intro data={intro}/>}
             />
           <Route 
             path='/rights'
-            render={() => <Category data={this.state.rights} />}
+            render={() => <Category data={rights} />}
           />
           <Route 
             path='/what-to-do'
-            render={() => <Category data={this.state.scenarios} />}
+            render={() => <Category data={scenarios} />}
           />
           <Route 
             path='/help'
-            render={() => <Category data={this.state.help} />}
+            render={() => <Category data={help} />}
           />
         </div>
       </div>
@@ -113,4 +123,18 @@ class App extends Component {
   }
 }
 
-export default App;
+export const mapStateToProps = (state) => ({
+  intro: state.intro,
+  rights: state.rights,
+  scenarios: state.scenarios,
+  help: state.help,
+})
+
+export const mapDispatchToProps = (dispatch) => ({
+  storeIntro: (intro) => dispatch(storeIntro(intro)) ,
+  storeRights: (rights) => dispatch(storeRights(rights)),
+  storeScenarios: (scenarios) => dispatch(storeScenarios(scenarios)),
+  storeHelp: (help) => dispatch(storeHelp(help))
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
