@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import './_Nav.scss'
 
 export const Nav = ( {getRights, getScenarios} ) => {
   return (
-    <div>
+    <div className='nav-container'>
       <NavLink 
         onClick={getRights}
         exact to='/rights'
