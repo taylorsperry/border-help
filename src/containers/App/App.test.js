@@ -2,6 +2,7 @@ import React from 'react';
 import { App } from './App';
 import { shallow } from 'enzyme';
 // import { storeRights, storeScenarios } from '../../actions'
+import { mockIntro } from '../../helpers/mockIntro'
 import { mockRights } from '../../helpers/mockRights'
 import { mockScenarios } from '../../helpers/mockScenarios'
 import { mockHelp } from '../../helpers/mockHelp'
@@ -18,6 +19,29 @@ describe('App', () => {
 
   it('should match the snapshot', () => {
     expect(wrapper).toMatchSnapshot()
+  })
+
+  describe('componentDidMount', () => {
+
+    it('should call fetch and return an array of introductory paragraphs', async () => {
+      const mockProps = {
+        storeIntro: jest.fn()
+      }
+
+      wrapper = shallow(<App {...mockProps} />)
+
+      window.fetch = jest.fn().mockImplementation( () => Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve(mockIntro)
+      }))
+
+      wrapper.instance().componentDidMount()
+      const response = await window.fetch()
+      const intro = await response.json()
+
+      expect(intro).toEqual(mockIntro)
+    })
   })
 
   describe('getRights', () => {
