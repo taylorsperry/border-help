@@ -7,7 +7,7 @@ import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
 
-class App extends Component {
+export class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -32,6 +32,7 @@ class App extends Component {
   getRights = () => {
     const { history, rights } = this.props
     if (!rights.length) {
+      
       this.fetchRights()
     } else {
       history.push('/rights')
