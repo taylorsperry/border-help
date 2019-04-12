@@ -1,11 +1,12 @@
 import React from 'react';
 import { App } from './App';
 import { shallow } from 'enzyme';
-// import { storeRights, storeScenarios } from '../../actions'
+import { storeRights } from '../../actions'
 import { mockIntro } from '../../helpers/mockIntro'
 import { mockRights } from '../../helpers/mockRights'
 import { mockScenarios } from '../../helpers/mockScenarios'
 import { mockHelp } from '../../helpers/mockHelp'
+import { mapStateToProps, mapDispatchToProps } from './App'
 
 jest.mock('../../actions')
 
@@ -77,8 +78,8 @@ describe('App', () => {
       const mockProps = {
         scenarios: emptyScenarios,
         history: { push: jest.fn() }
-
       }
+
       wrapper = shallow(<App {...mockProps} />)
       const spy = jest.spyOn(wrapper.instance(), 'fetchScenarios')
 
@@ -221,6 +222,30 @@ describe('App', () => {
 
       expect(help).toEqual(mockHelp)
     })
+  })
+
+  describe('mapStateToProps', () => {
+    it('should return a state object', () => {
+      const mockState = {
+        intro: mockIntro,
+        rights: mockRights,
+        scenarios: mockScenarios,
+        help: mockHelp
+      }
+
+      const mappedProps = mapStateToProps(mockState)
+
+      expect(mappedProps).toEqual(mockState)
+    })
+  })
+
+  describe('mapDispatchToProps', () => {
+    const mockDispatch = jest.fn()
+    const actionToDispatch = storeRights(mockRights)
+    const mappedProps = mapDispatchToProps(mockDispatch)
+
+    mappedProps.storeRights(mockRights)
+    expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch)
   })
 
 })
