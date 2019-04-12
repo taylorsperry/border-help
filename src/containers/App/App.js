@@ -107,15 +107,15 @@ class App extends Component {
             />
           <Route 
             path='/rights'
-            render={() => <Category data={rights} />}
+            render={() => <Category catName='Your Rights' data={rights} />}
           />
           <Route 
             path='/what-to-do'
-            render={() => <Category data={scenarios} />}
+            render={() => <Category catName='What to Do' data={scenarios} />}
           />
           <Route 
             path='/help'
-            render={() => <Category data={help} />}
+            render={() => <Category catName='Help' data={help} />}
           />
         </div>
       </div>
