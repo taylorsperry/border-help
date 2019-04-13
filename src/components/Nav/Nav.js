@@ -26,6 +26,13 @@ export const Nav = ( {getRights, getScenarios, getHelp} ) => {
       >
         Help
       </NavLink>
+      <NavLink
+        // onClick={getHelp}
+        exact to='/location' 
+        className='nav-link'
+      >
+        Your Location
+      </NavLink>
     </div>
   )
 }

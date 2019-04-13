@@ -6,6 +6,7 @@ import { storeIntro, storeRights, storeScenarios, storeHelp } from '../../action
 import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
+import Location from '../../components/Location/Location'
 
 export class App extends Component {
   constructor() {
@@ -117,6 +118,10 @@ export class App extends Component {
           <Route 
             path='/help'
             render={() => <Category catName='Help' data={help} />}
+          />
+          <Route 
+            path='/location'
+            render={() => <Location />} 
           />
         </div>
       </div>
