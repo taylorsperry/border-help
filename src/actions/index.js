@@ -17,3 +17,8 @@ export const storeHelp = (help) => ({
   type: 'STORE_HELP',
   help
 })
+
+export const storeLocation = (location) => ({
+  type: 'STORE_LOCATION',
+  location
+})

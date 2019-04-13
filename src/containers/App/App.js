@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import { withRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './_App.scss';
-import { storeIntro, storeRights, storeScenarios, storeHelp } from '../../actions/'
+import { storeIntro, storeRights, storeScenarios, storeHelp, storeLocation } from '../../actions/'
 import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
 import Location from '../../components/Location/Location'
 
 export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      rights: [],
-      scenarios: [],
-      intro: [],
-      help: [],
-    }
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     rights: [],
+  //     scenarios: [],
+  //     intro: [],
+  //     help: [],
+  //   }
+  // }
 
   async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
@@ -56,6 +56,15 @@ export class App extends Component {
     } else {
       history.push('/help')
     }
+  }
+
+  
+  getLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) =>  {
+      const longitude = position.coords.longitude
+      const latitude = position.coords.latitude
+      this.props.storeLocation([longitude, latitude])
+      });
   }
 
   fetchRights = async () => {
@@ -100,7 +109,7 @@ export class App extends Component {
         </header>
           <Route 
             path='/'
-            render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp}/>}
+            render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp} getLocation={this.getLocation} />}
           />
           <div className='container'>
           <Route 
@@ -134,13 +143,15 @@ export const mapStateToProps = (state) => ({
   rights: state.rights,
   scenarios: state.scenarios,
   help: state.help,
+  location: state.location,
 })
 
 export const mapDispatchToProps = (dispatch) => ({
   storeIntro: (intro) => dispatch(storeIntro(intro)) ,
   storeRights: (rights) => dispatch(storeRights(rights)),
   storeScenarios: (scenarios) => dispatch(storeScenarios(scenarios)),
-  storeHelp: (help) => dispatch(storeHelp(help))
+  storeHelp: (help) => dispatch(storeHelp(help)),
+  storeLocation: (location) => dispatch(storeLocation(location)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

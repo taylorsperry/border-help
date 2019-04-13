@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './_Nav.scss'
 
-export const Nav = ( {getRights, getScenarios, getHelp} ) => {
+export const Nav = ( {getRights, getScenarios, getHelp, getLocation} ) => {
   return (
     <div className='nav-container'>
       <NavLink 
@@ -27,7 +27,7 @@ export const Nav = ( {getRights, getScenarios, getHelp} ) => {
         Help
       </NavLink>
       <NavLink
-        // onClick={getHelp}
+        onClick={getLocation}
         exact to='/location' 
         className='nav-link'
       >

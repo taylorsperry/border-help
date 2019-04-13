@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
-import { Map as LeafletMap, TileLayer } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
+import { connect } from 'react-redux'
 import './_Location.scss';
 
 export class Location extends Component {
   constructor() {
     super();
     this.state = {
-      location: [39.739235, -104.990250],
+      location: [-27.08549, 10.20749],
     }
   }
 
+  
+
   render() {
+    console.log(this.props.location)
     return (
       <div className='map-container'>
         <LeafletMap
@@ -21,6 +25,7 @@ export class Location extends Component {
           <TileLayer 
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
+          <Marker position={this.state.location} />
         </LeafletMap>
       </div>
     )
@@ -28,4 +33,8 @@ export class Location extends Component {
 
 }
 
-export default Location
+const mapStateToProps = (state) => ({
+  location: state.location
+})
+
+export default connect(mapStateToProps)(Location)
