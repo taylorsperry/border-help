@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.App {
+  background-color: $white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding: 0px 20px;
+}
+
+.logo {
+  color: $blue;
+  font-family: 'Anton';
+  margin: 0px;
+  font-size: 2.5rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+

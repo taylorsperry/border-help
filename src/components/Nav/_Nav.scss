@@ -1,0 +1,31 @@
+@import '../../variables';
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: $blue;
+  box-shadow: 0 4px 6px -5px rgba(0,0,0,0.20);
+  margin-bottom: 50px;
+}
+
+.nav-link {
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: solid $navy 1px;
+  width: 33.3%;
+  height: 50px;
+    &:hover {
+      background-color: $blue-hover;
+    }
+}
+
+.active {
+  background-color: $red;
+  &:hover {
+    background-color: $red-hover
+  }
+}
