@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
+import { Map as LeafletMap, TileLayer, Marker, GeoJSON } from 'react-leaflet'
 import { connect } from 'react-redux'
+import { coordinates } from '../../helpers/geojson'
 import './_Location.scss';
 
 export class Location extends Component {
@@ -50,6 +51,12 @@ export class Location extends Component {
       distance = this.getDistance()
       msg = `you are ${distance} miles from the border`
     }
+
+    let data = {
+      "type": "LineString",
+      "coordinates": coordinates
+    }
+    
     return (
       <div className='map-container'>
         <p>{msg}</p>
@@ -59,6 +66,9 @@ export class Location extends Component {
           zoom='4'
           onClick={this.addMarker}
         >
+          <GeoJSON 
+            data={data}
+          />
           <TileLayer 
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
