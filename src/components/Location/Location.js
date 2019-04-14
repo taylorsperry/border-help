@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
+// import L from 'leaflet'
 import { connect } from 'react-redux'
 import './_Location.scss';
 
@@ -8,6 +9,7 @@ export class Location extends Component {
     super();
     this.state = {
       location: [40.650002, -73.949997],
+      location2: []
     }
   }
 
@@ -24,20 +26,40 @@ export class Location extends Component {
       });
     })
   }
+
+  getDistance = () => {
+    let geodist = require('geodist')
+    let currLocation = this.state.location
+    let location2 = this.state.location2
+    console.log(geodist(currLocation, location2, {exact: true, unit: 'mi'})) 
+  }
+
+  addMarker = (e) => {
+    let {lat, lng} = e.latlng
+    this.setState({
+      location2: [lat, lng]
+    })
+  }
   
   render() {
-
+    let location2
+    if(this.state.location2.length) {
+      location2 = <Marker position={this.state.location2} />
+      this.getDistance()
+    }
     return (
       <div className='map-container'>
         <LeafletMap
           id='map'
           center={this.state.location}
-          zoom='13'
+          zoom='4'
+          onClick={this.addMarker}
         >
           <TileLayer 
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
           <Marker position={this.state.location} />
+          {location2}
         </LeafletMap>
       </div>
     )
