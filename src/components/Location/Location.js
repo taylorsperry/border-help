@@ -9,7 +9,8 @@ export class Location extends Component {
     super();
     this.state = {
       location: [40.650002, -73.949997],
-      location2: []
+      location2: [],
+      distance: 0
     }
   }
 
@@ -31,7 +32,7 @@ export class Location extends Component {
     let geodist = require('geodist')
     let currLocation = this.state.location
     let location2 = this.state.location2
-    console.log(geodist(currLocation, location2, {exact: true, unit: 'mi'})) 
+    return geodist(currLocation, location2, {exact: true, unit: 'mi'})
   }
 
   addMarker = (e) => {
@@ -43,12 +44,16 @@ export class Location extends Component {
   
   render() {
     let location2
+    let distance 
+    let msg = 'click the border to calculate distance'
     if(this.state.location2.length) {
       location2 = <Marker position={this.state.location2} />
-      this.getDistance()
+      distance = this.getDistance()
+      msg = `you are ${distance} miles from the border`
     }
     return (
       <div className='map-container'>
+        <p>{msg}</p>
         <LeafletMap
           id='map'
           center={this.state.location}

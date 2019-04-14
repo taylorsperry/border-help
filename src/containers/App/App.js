@@ -49,14 +49,6 @@ export class App extends Component {
     }
   }
 
-  // getLocation = () => {
-  //   navigator.geolocation.getCurrentPosition( (position) =>  {
-  //     const longitude = position.coords.longitude
-  //     const latitude =  position.coords.latitude
-  //     this.props.storeLocation([latitude, longitude])
-  //     });
-  // }
-
   fetchRights = async () => {
     const url = 'http://localhost:3001/api/v1/rights/'
     try {
@@ -99,7 +91,7 @@ export class App extends Component {
         </header>
           <Route 
             path='/'
-            render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp} getLocation={this.getLocation} />}
+            render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp} />}
           />
           <div className='container'>
           <Route 
@@ -108,15 +100,15 @@ export class App extends Component {
             />
           <Route 
             path='/rights'
-            render={() => <Category catName='Your Rights' data={rights} />}
+            render={() => <Category catName='Your Rights' data={rights} callFetch={this.fetchRights} />}
           />
           <Route 
             path='/what-to-do'
-            render={() => <Category catName='What to Do' data={scenarios} />}
+            render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.fetchScenarios} />}
           />
           <Route 
             path='/help'
-            render={() => <Category catName='Help' data={help} />}
+            render={() => <Category catName='Help' data={help} callFetch={this.fetchHelp} />}
           />
           <Route 
             path='/location'

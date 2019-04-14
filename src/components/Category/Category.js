@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Item from '../Item/Item'
 import './_Category.scss'
 
-export const Category = ( {catName, data} ) => {
+export class Category extends Component {
+ render() {
+  const { catName, data, callFetch } = this.props
+  if(!data.length) {
+    callFetch()
+  }
   const displayItems = data.map(item => (
     <Item key={item.id} item={item} />
     ))
@@ -12,6 +17,7 @@ export const Category = ( {catName, data} ) => {
       {displayItems}
     </div>
   )
+}
 }
 
 export default Category

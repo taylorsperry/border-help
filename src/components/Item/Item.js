@@ -28,8 +28,8 @@ export class Item extends Component {
     } 
 
     return (
-      <div>
-        <h3 onClick={this.toggleDetail}>{title}</h3>
+      <div className='item'>
+        <h3 onClick={this.toggleDetail} className='title'>{title}</h3>
         {displayDetail}
       </div>
     )
