@@ -7,20 +7,32 @@ export class Location extends Component {
   constructor() {
     super();
     this.state = {
-      location: [-27.08549, 10.20749],
+      location: [40.650002, -73.949997],
     }
   }
 
-  
+  componentDidMount() {
+    this.getLocation()
+  }
 
+  getLocation = () => {
+    navigator.geolocation.getCurrentPosition( async (position) =>  {
+      const longitude = await position.coords.longitude
+      const latitude =  await position.coords.latitude
+      this.setState({
+        location: [latitude, longitude]
+      });
+    })
+  }
+  
   render() {
-    console.log(this.props.location)
+
     return (
       <div className='map-container'>
         <LeafletMap
           id='map'
           center={this.state.location}
-          zoom='6'
+          zoom='13'
         >
           <TileLayer 
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

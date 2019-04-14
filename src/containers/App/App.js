@@ -9,15 +9,6 @@ import Category from '../../components/Category/Category'
 import Location from '../../components/Location/Location'
 
 export class App extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     rights: [],
-  //     scenarios: [],
-  //     intro: [],
-  //     help: [],
-  //   }
-  // }
 
   async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
@@ -58,14 +49,13 @@ export class App extends Component {
     }
   }
 
-  
-  getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) =>  {
-      const longitude = position.coords.longitude
-      const latitude = position.coords.latitude
-      this.props.storeLocation([longitude, latitude])
-      });
-  }
+  // getLocation = () => {
+  //   navigator.geolocation.getCurrentPosition( (position) =>  {
+  //     const longitude = position.coords.longitude
+  //     const latitude =  position.coords.latitude
+  //     this.props.storeLocation([latitude, longitude])
+  //     });
+  // }
 
   fetchRights = async () => {
     const url = 'http://localhost:3001/api/v1/rights/'
