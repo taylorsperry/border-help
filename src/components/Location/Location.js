@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
-// import L from 'leaflet'
 import { connect } from 'react-redux'
 import './_Location.scss';
 
