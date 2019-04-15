@@ -1,8 +1,8 @@
 export const rights = (state=[], action) => {
-  switch (action.type) {
+  switch(action.type) {
     case 'STORE_RIGHTS':
       return action.rights
-    default:
+    default: 
       return state
   }
 }

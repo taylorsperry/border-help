@@ -1,85 +1,50 @@
 import React, { Component } from 'react';
-import { withRouter, Route } from 'react-router-dom'
+import { withRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './_App.scss';
-import { storeIntro, storeRights, storeScenarios, storeHelp, storeLocation } from '../../actions/'
 import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
 import Location from '../../components/Location/Location'
+import { fetchRights } from '../../thunks/fetchRights'
+import { fetchScenarios } from '../../thunks/fetchScenarios'
+import { fetchHelp } from '../../thunks/fetchHelp'
+import { fetchIntro } from '../../thunks/fetchIntro'
 
 export class App extends Component {
 
   async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
-    try {
-      const response = await fetch(url)
-      const intro = await response.json()
-      this.props.storeIntro(intro)
-    } catch (error) {
-      return error.message
-    }
+    this.props.fetchIntro(url)
   }
 
   getRights = () => {
+    const url = 'http://localhost:3001/api/v1/rights/'
     const { history, rights } = this.props
     if (!rights.length) {
-      
-      this.fetchRights()
+      this.props.fetchRights(url)
     } else {
       history.push('/rights')
     }
   }
-
+  
   getScenarios = () => {
+    const url = 'http://localhost:3001/api/v1/scenarios'
     const { history, scenarios } = this.props
     if (!scenarios.length) {
-      this.fetchScenarios()
+      this.props.fetchScenarios(url)
     } else {
       history.push('/scenarios')
     }
   }
 
   getHelp = () => {
+    const url = 'http://localhost:3001/api/v1/help'
     const { history, help } = this.props
     if (!help.length) {
-      this.fetchHelp()
+      this.props.fetchHelp(url)
     } else {
       history.push('/help')
-    }
-  }
-
-  fetchRights = async () => {
-    //all of this fetchRights function should live inside of a thunk. The thunk has 3 actions: 1. set/reset isLoading (synchronous), 2. deal w hasError (also synchronous), 3. storeRights
-    const url = 'http://localhost:3001/api/v1/rights/'
-    try {
-      const response = await fetch(url)
-      const rights = await response.json()
-      this.props.storeRights(rights)
-    } catch (error) {
-      return error.message
-    }
-  }
-
-  fetchScenarios = async () => {
-    const url = 'http://localhost:3001/api/v1/scenarios/'
-    try {
-      const response = await fetch(url)
-      const scenarios = await response.json()
-      this.props.storeScenarios(scenarios)
-    } catch (error) {
-      return error.message
-    }
-  }
-
-  fetchHelp = async () => {
-    const url = 'http://localhost:3001/api/v1/help'
-    try {
-      const response = await fetch(url)
-      const help = await response.json()
-      this.props.storeHelp(help)
-    } catch (error) {
-      return error.message
     }
   }
 
@@ -88,7 +53,11 @@ export class App extends Component {
     return (
       <div className="App">
         <header className='header'>
-          <h1 className='logo'>BorderHelp</h1>
+          <Link to='/'
+                className='header-link'
+          >
+            <h1 className='logo'>BorderHelp</h1>
+          </Link>
         </header>
           <Route 
             path='/'
@@ -101,15 +70,15 @@ export class App extends Component {
             />
           <Route 
             path='/rights'
-            render={() => <Category catName='Your Rights' data={rights} callFetch={this.fetchRights} />}
+            render={() => <Category catName='Your Rights' data={rights} callFetch={this.getRights} />}
           />
           <Route 
             path='/what-to-do'
-            render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.fetchScenarios} />}
+            render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.getScenarios} />}
           />
           <Route 
             path='/help'
-            render={() => <Category catName='Help' data={help} callFetch={this.fetchHelp} />}
+            render={() => <Category catName='Help' data={help} callFetch={this.getHelp} />}
           />
           <Route 
             path='/location'
@@ -130,11 +99,10 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  storeIntro: (intro) => dispatch(storeIntro(intro)) ,
-  storeRights: (rights) => dispatch(storeRights(rights)),
-  storeScenarios: (scenarios) => dispatch(storeScenarios(scenarios)),
-  storeHelp: (help) => dispatch(storeHelp(help)),
-  storeLocation: (location) => dispatch(storeLocation(location)),
+  fetchIntro: (url) => dispatch(fetchIntro(url)),
+  fetchRights: (url) => dispatch(fetchRights(url)),
+  fetchScenarios: (url) => dispatch(fetchScenarios(url)),
+  fetchHelp: (url) => dispatch(fetchHelp(url))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
