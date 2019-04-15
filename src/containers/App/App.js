@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, Route, Link } from 'react-router-dom'
+import { withRouter, Route, Link, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './_App.scss';
 import Intro from '../../components/Intro/Intro'
@@ -10,12 +10,17 @@ import { fetchRights } from '../../thunks/fetchRights'
 import { fetchScenarios } from '../../thunks/fetchScenarios'
 import { fetchHelp } from '../../thunks/fetchHelp'
 import { fetchIntro } from '../../thunks/fetchIntro'
+import Error from '../../components/Error/Error'
 
 export class App extends Component {
 
   async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
-    this.props.fetchIntro(url)
+    try {
+      this.props.fetchIntro(url)
+    } catch(error) {
+      console.log(error.message)
+    }
   }
 
   getRights = () => {
@@ -64,26 +69,29 @@ export class App extends Component {
             render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp} />}
           />
           <div className='container'>
-          <Route 
-            exact path='/'
-            render={() => <Intro data={intro}/>}
+          <Switch>
+            <Route 
+              exact path='/'
+              render={() => <Intro data={intro}/>}
+              />
+            <Route 
+              exact path='/rights'
+              render={() => <Category catName='Your Rights' data={rights} callFetch={this.getRights} />}
             />
-          <Route 
-            path='/rights'
-            render={() => <Category catName='Your Rights' data={rights} callFetch={this.getRights} />}
-          />
-          <Route 
-            path='/what-to-do'
-            render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.getScenarios} />}
-          />
-          <Route 
-            path='/help'
-            render={() => <Category catName='Help' data={help} callFetch={this.getHelp} />}
-          />
-          <Route 
-            path='/location'
-            render={() => <Location />} 
-          />
+            <Route 
+              exact path='/what-to-do'
+              render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.getScenarios} />}
+            />
+            <Route 
+              exact path='/help'
+              render={() => <Category catName='Help' data={help} callFetch={this.getHelp} />}
+            />
+            <Route 
+              exact path='/location'
+              render={() => <Location />} 
+            />
+            <Route component={Error} />
+          </Switch>
         </div>
       </div>
     );

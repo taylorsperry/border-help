@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Map as LeafletMap, TileLayer, Marker, GeoJSON } from 'react-leaflet'
 import { connect } from 'react-redux'
+import { fetchBorder } from '../../thunks/fetchBorder.js'
 import './_Location.scss';
 
 export class Location extends Component {
@@ -10,7 +11,6 @@ export class Location extends Component {
       location: [40.650002, -73.949997],
       nearestPt: [],
       distance: 0,
-      border: [],
     }
   }
 
@@ -31,22 +31,14 @@ export class Location extends Component {
 
   getBorder = async () => {
     const url = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Mexico_and_US_Border/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-      const coordinates = data.features[0].geometry.paths[0]
-      this.setState({
-        border: coordinates
-      })
-    } catch (error) {
-      console.log(error.message)
-    }
+    await this.props.fetchBorder(url)
     this.findNearest()
   }
 
   findNearest = () => {
     let geodist = require('geodist')
-    let { border, location } = this.state
+    let { border } = this.props
+    let { location } = this.state
     let nearestPt = border.map(coord => ({
       coord: [coord[1], coord[0]],
       dist: geodist(location, [coord[1], coord[0]], {exact: true, unit: 'mi'})
@@ -68,7 +60,7 @@ export class Location extends Component {
     let border 
     let data = {
       "type": "LineString",
-      "coordinates": this.state.border,
+      "coordinates": this.props.border,
     }
   
     if(this.state.nearestPt.length) {
@@ -79,7 +71,7 @@ export class Location extends Component {
       msg=`You are ${this.state.distance} miles from the border`
     }
 
-    if(this.state.border.length) {
+    if(this.props.border.length) {
       border = <GeoJSON 
             data={data}
           />
@@ -107,7 +99,11 @@ export class Location extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  location: state.location
+  border: state.border
 })
 
-export default connect(mapStateToProps)(Location)
+const mapDispatchToProps = (dispatch) => ({
+  fetchBorder: (url) => dispatch(fetchBorder(url))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Location)

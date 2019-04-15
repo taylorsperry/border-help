@@ -7,11 +7,16 @@ exports[`App should match the snapshot 1`] = `
   <header
     className="header"
   >
-    <h1
-      className="logo"
+    <Link
+      className="header-link"
+      to="/"
     >
-      BorderHelp
-    </h1>
+      <h1
+        className="logo"
+      >
+        BorderHelp
+      </h1>
+    </Link>
   </header>
   <Route
     path="/"
@@ -20,27 +25,36 @@ exports[`App should match the snapshot 1`] = `
   <div
     className="container"
   >
-    <Route
-      exact={true}
-      path="/"
-      render={[Function]}
-    />
-    <Route
-      path="/rights"
-      render={[Function]}
-    />
-    <Route
-      path="/what-to-do"
-      render={[Function]}
-    />
-    <Route
-      path="/help"
-      render={[Function]}
-    />
-    <Route
-      path="/location"
-      render={[Function]}
-    />
+    <Switch>
+      <Route
+        exact={true}
+        path="/"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/rights"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/what-to-do"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/help"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/location"
+        render={[Function]}
+      />
+      <Route
+        component={[Function]}
+      />
+    </Switch>
   </div>
 </div>
 `;

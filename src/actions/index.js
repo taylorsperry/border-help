@@ -33,3 +33,8 @@ export const hasErrored = (message) => ({
   message
 })
 
+export const storeBorder = (coordinates) => ({
+  type: 'STORE_BORDER',
+  coordinates
+})
+
