@@ -30,11 +30,12 @@ export class Location extends Component {
   }
 
   findNearest = () => {
+    //border coords are long/lat for ex. -96, 25
     let geodist = require('geodist')
     let { border, location } = this.state
     let shortestDist = border.map(coord => ({
-      coord : coord,
-      dist: geodist(location, coord, {exact: true, unit: 'mi'})
+      coord : [coord[1], coord[0]],
+      dist: geodist(location, [coord[1], coord[0]], {exact: true, unit: 'mi'})
     })).sort((a,b) => a.dist-b.dist)[0]
     this.setData(shortestDist)
   }
@@ -56,6 +57,7 @@ export class Location extends Component {
   }
 
   getBorder = async () => {
+    
     const url = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Mexico_and_US_Border/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'
     try {
       const response = await fetch(url)
