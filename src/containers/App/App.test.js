@@ -135,11 +135,13 @@ describe('App', () => {
   describe('fetchRights', async () => {
 
     beforeEach(() => {
-      const mockProps = {
-        storeRights: jest.fn()
-      }
+      // const mockProps = {
+      //   storeRights: jest.fn()
+      // }
       
-      wrapper = shallow(<App {...mockProps} />)
+      wrapper = shallow(<App 
+        storeRights = {jest.fn()}
+        />)
       
       window.fetch = jest.fn().mockImplementation( () => Promise.resolve({
         ok: true,
@@ -159,12 +161,14 @@ describe('App', () => {
       expect(rights).toEqual(mockRights)
     })
 
-    it.skip('should dispatch storeRights with the response from the fetch', async () => {
+    it('should dispatch storeRights with the response from the fetch', async () => {
       const response = await window.fetch()
       const rights = await response.json()
+      // const storeRights = jest.fn();
       
       expect(window.fetch).toHaveBeenCalled()
-      expect(wrapper.props.storeRights).toHaveBeenCalledWith(rights)
+      wrapper.instance().fetchRights()
+      expect(wrapper.instance().props.storeRights).toHaveBeenCalledWith(rights)
     })
   })
 

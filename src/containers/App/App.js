@@ -50,6 +50,7 @@ export class App extends Component {
   }
 
   fetchRights = async () => {
+    //all of this fetchRights function should live inside of a thunk. The thunk has 3 actions: 1. set/reset isLoading (synchronous), 2. deal w hasError (also synchronous), 3. storeRights
     const url = 'http://localhost:3001/api/v1/rights/'
     try {
       const response = await fetch(url)
