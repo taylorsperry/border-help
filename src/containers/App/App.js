@@ -16,11 +16,7 @@ export class App extends Component {
 
   async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
-    try {
-      this.props.fetchIntro(url)
-    } catch(error) {
-      console.log(error.message)
-    }
+    this.props.fetchIntro(url)
   }
 
   getRights = () => {
