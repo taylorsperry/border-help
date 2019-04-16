@@ -1,14 +1,14 @@
 import React from 'react';
 import { App } from './App';
 import { shallow } from 'enzyme';
-import { storeRights } from '../../actions'
+import { fetchRights } from '../../thunks/fetchRights'
 import { mockIntro } from '../../helpers/mockIntro'
 import { mockRights } from '../../helpers/mockRights'
 import { mockScenarios } from '../../helpers/mockScenarios'
 import { mockHelp } from '../../helpers/mockHelp'
 import { mapStateToProps, mapDispatchToProps } from './App'
 
-jest.mock('../../actions')
+jest.mock('../../thunks/fetchRights')
 
 
 describe('App', () => {
@@ -24,24 +24,16 @@ describe('App', () => {
 
   describe('componentDidMount', () => {
 
-    it('should call fetch and return an array of introductory paragraphs', async () => {
+    it('should call fetchIntro', () => {
       const mockProps = {
-        storeIntro: jest.fn()
+        fetchIntro: jest.fn()
       }
 
       wrapper = shallow(<App {...mockProps} />)
 
-      window.fetch = jest.fn().mockImplementation( () => Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve(mockIntro)
-      }))
-
       wrapper.instance().componentDidMount()
-      const response = await window.fetch()
-      const intro = await response.json()
 
-      expect(intro).toEqual(mockIntro)
+      expect(wrapper.instance().props.fetchIntro).toHaveBeenCalled()
     })
   })
 
@@ -49,25 +41,25 @@ describe('App', () => {
     
     it('should call fetchRights if there are no rights in the store', () => {
       const emptyRights = []
-      wrapper = shallow(<App rights={emptyRights} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchRights')
+      wrapper = shallow(<App rights={emptyRights} fetchRights={jest.fn()}/>)
+      // const spy = jest.spyOn(wrapper.instance(), 'fetchRights')
 
       wrapper.instance().getRights()
-      
-      expect(spy).toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchRights).toHaveBeenCalled()
+      // expect(spy).toHaveBeenCalled()
     })
 
     it('should not call fetchRights if there are rights in the store', () => {
       const mockProps = {
         rights: mockRights,
-        history: { push: jest.fn() }
+        history: { push: jest.fn() },
+        fetchRights: jest.fn()
       }
       wrapper = shallow(<App {...mockProps} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchRights')
 
       wrapper.instance().getRights()
 
-      expect(spy).not.toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchRights).not.toHaveBeenCalled()
     })
   })
 
@@ -77,28 +69,28 @@ describe('App', () => {
       const emptyScenarios = []
       const mockProps = {
         scenarios: emptyScenarios,
-        history: { push: jest.fn() }
+        history: { push: jest.fn() },
+        fetchScenarios: jest.fn()
       }
 
       wrapper = shallow(<App {...mockProps} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchScenarios')
 
       wrapper.instance().getScenarios()
 
-      expect(spy).toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchScenarios).toHaveBeenCalled()
     })
 
     it('should not call fetchScenarios if there are scenarios in the store', () => {
       const mockProps = {
         scenarios: mockScenarios,
-        history: { push: jest.fn() }
+        history: { push: jest.fn() },
+        fetchScenarios: jest.fn()
       }
       wrapper = shallow(<App {...mockProps} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchScenarios')
 
       wrapper.instance().getScenarios()
 
-      expect(spy).not.toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchScenarios).not.toHaveBeenCalled()
     })
   })
 
@@ -108,121 +100,31 @@ describe('App', () => {
       const emptyHelp = []
       const mockProps = {
         help: emptyHelp,
-        history: { push: jest.fn() }
+        history: { push: jest.fn() },
+        fetchHelp: jest.fn()
       }
+
       wrapper = shallow(<App {...mockProps} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchHelp')
 
       wrapper.instance().getHelp()
 
-      expect(spy).toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchHelp).toHaveBeenCalled()
     })
 
     it('should not call fetchHelp if there is help in the store', () => {
       const mockProps = {
         help: mockHelp,
-        history: { push: jest.fn() }
+        history: { push: jest.fn() },
+        fetchHelp: jest.fn()
       }
       wrapper = shallow(<App {...mockProps} />)
-      const spy = jest.spyOn(wrapper.instance(), 'fetchHelp')
 
       wrapper.instance().getHelp()
 
-      expect(spy).not.toHaveBeenCalled()
+      expect(wrapper.instance().props.fetchHelp).not.toHaveBeenCalled()
     })
   })
 
-  describe('fetchRights', async () => {
-
-    beforeEach(() => {
-      const mockProps = {
-        storeRights: jest.fn()
-      }
-      
-      wrapper = shallow(<App {...mockProps} />)
-      
-      window.fetch = jest.fn().mockImplementation( () => Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve(mockRights)
-      }))
-    })
-
-    it('should call fetch and return an array of rights', async () => {
-
-      wrapper.instance().fetchRights()
-
-      const response = await window.fetch()
-      const rights = await response.json()
-      
-      expect(window.fetch).toHaveBeenCalled()
-      expect(rights).toEqual(mockRights)
-    })
-
-    it.skip('should dispatch storeRights with the response from the fetch', async () => {
-      const response = await window.fetch()
-      const rights = await response.json()
-      
-      expect(window.fetch).toHaveBeenCalled()
-      expect(wrapper.props.storeRights).toHaveBeenCalledWith(rights)
-    })
-  })
-
-  describe('fetchScenarios', () => {
-
-    beforeEach(() => {
-      const mockProps = {
-        storeScenarios: jest.fn()
-      }
-
-      wrapper = shallow(<App {...mockProps} />)
-
-      window.fetch = jest.fn().mockImplementation( () => Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve(mockScenarios)
-      }))
-    })
-
-    it('should call fetch and return an array of scenarios', async () => {
-      
-      wrapper.instance().fetchScenarios()
-      const response = await window.fetch()
-      const scenarios = await response.json()
-
-      expect(scenarios).toEqual(mockScenarios)
-    })
-
-    it.skip('should dispatch storeScenarios with the response from the fetch', () => {
-
-    })
-  })
-
-  describe('fetchHelp', () => {
-
-    beforeEach(() => {
-      const mockProps = {
-        storeHelp: jest.fn()
-      }
-
-      wrapper = shallow(<App {...mockProps} />)
-
-      window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve(mockHelp)
-      }))
-    })
-
-    it('should call fetch and return an array of help', async () => {
-
-      wrapper.instance().fetchHelp()
-      const response = await window.fetch()
-      const help = await response.json()
-
-      expect(help).toEqual(mockHelp)
-    })
-  })
 
   describe('mapStateToProps', () => {
     it('should return a state object', () => {
@@ -240,12 +142,15 @@ describe('App', () => {
   })
 
   describe('mapDispatchToProps', () => {
+    it('should dispatch fetchRights if props.fetchRights is called', () => {
     const mockDispatch = jest.fn()
-    const actionToDispatch = storeRights(mockRights)
+    const mockUrl = 'www.url.com'
+    const mockActionToDispatch = fetchRights(mockUrl)
     const mappedProps = mapDispatchToProps(mockDispatch)
 
-    mappedProps.storeRights(mockRights)
-    expect(mockDispatch).toHaveBeenCalledWith(actionToDispatch)
+    mappedProps.fetchRights(mockRights)
+    expect(mockDispatch).toHaveBeenCalledWith(mockActionToDispatch)
+    })
   })
 
 })
