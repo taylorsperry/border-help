@@ -5,7 +5,7 @@ import './_App.scss';
 import Intro from '../../components/Intro/Intro'
 import Nav from '../../components/Nav/Nav'
 import Category from '../../components/Category/Category'
-import Location from '../../components/Location/Location'
+import Location from '../Location/Location'
 import { fetchRights } from '../../thunks/fetchRights'
 import { fetchScenarios } from '../../thunks/fetchScenarios'
 import { fetchHelp } from '../../thunks/fetchHelp'
@@ -14,9 +14,9 @@ import Error from '../../components/Error/Error'
 
 export class App extends Component {
 
-  async componentDidMount() {
+ async componentDidMount() {
     const url = 'http://localhost:3001/api/v1/intro'
-    this.props.fetchIntro(url)
+    await this.props.fetchIntro(url)
   }
 
   getRights = () => {
@@ -99,7 +99,6 @@ export const mapStateToProps = (state) => ({
   rights: state.rights,
   scenarios: state.scenarios,
   help: state.help,
-  location: state.location,
 })
 
 export const mapDispatchToProps = (dispatch) => ({

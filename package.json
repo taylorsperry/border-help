@@ -40,6 +40,30 @@
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/actions/index.js",
+      "src/components/Category/Category.js",
+      "src/components/Error/Error.js",
+      "src/components/Intro/Intro.js",
+      "src/components/Item/Item.js",
+      "src/components/Nav/Nav.js",
+      "src/components/Paragraph/Paragraph.js",
+      "src/containers/App/App.js",
+      "src/containers/Location/Location.js",
+      "src/reducers/border.js",
+      "src/reducers/error.js",
+      "src/reducers/help.js",
+      "src/reducers/index.js",
+      "src/reducers/intro.js",
+      "src/reducers/loading.js",
+      "src/reducers/rights.js",
+      "src/reducers/scenarios.js",
+      "src/thunks/fetchBorder.js",
+      "src/thunks/fetchHelp.js",
+      "src/thunks/fetchIntro.js",
+      "src/thunks/fetchRights.js",
+      "src/thunks/fetchScenarios.js"
     ]
   }
 }

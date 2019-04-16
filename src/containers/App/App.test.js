@@ -13,9 +13,13 @@ jest.mock('../../thunks/fetchRights')
 
 describe('App', () => {
   let wrapper;
+  const mockFetchIntro = jest.fn()
+  const mockProps = {
+    fetchIntro: mockFetchIntro
+  }
 
   beforeEach(() => {
-    wrapper = shallow(<App />)
+    wrapper = shallow(<App {...mockProps} />)
   })
 
   it('should match the snapshot', () => {

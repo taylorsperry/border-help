@@ -62,6 +62,7 @@ export class Location extends Component {
       "type": "LineString",
       "coordinates": this.props.border,
     }
+    let loading
   
     if(this.state.nearestPt.length) {
       nearestMarker = <Marker position={this.state.nearestPt} />
@@ -76,9 +77,14 @@ export class Location extends Component {
             data={data}
           />
     }
+
+    if(this.props.loading || !this.state.nearestPt.length) {
+      loading = <p>Loading ...</p>
+    }
     
     return (
       <div className='map-container'>
+        {loading}
         {msg}
         <LeafletMap
           id='map'
@@ -99,7 +105,8 @@ export class Location extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  border: state.border
+  border: state.border,
+  loading: state.loading
 })
 
 const mapDispatchToProps = (dispatch) => ({

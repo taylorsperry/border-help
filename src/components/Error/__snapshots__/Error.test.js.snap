@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error should match the snapshot 1`] = `
+<div>
+  That page does not exist
+</div>
+`;

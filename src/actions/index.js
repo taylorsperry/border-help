@@ -18,11 +18,6 @@ export const storeHelp = (help) => ({
   help
 })
 
-export const storeLocation = (location) => ({
-  type: 'STORE_LOCATION',
-  location
-})
-
 export const isLoading = (bool) => ({
   type: 'IS_LOADING',
   isLoading: bool
