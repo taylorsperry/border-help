@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav should match the snapshot 1`] = `
+<div
+  className="nav-container"
+>
+  <NavLink
+    className="nav-link"
+    exact={true}
+    to="/rights"
+  >
+    Your Rights
+  </NavLink>
+  <NavLink
+    className="nav-link"
+    exact={true}
+    to="/what-to-do"
+  >
+    What to Do
+  </NavLink>
+  <NavLink
+    className="nav-link"
+    exact={true}
+    to="/help"
+  >
+    Help
+  </NavLink>
+  <NavLink
+    className="nav-link"
+    exact={true}
+    to="/location"
+  >
+    Your Location
+  </NavLink>
+</div>
+`;

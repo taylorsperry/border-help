@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item should match the snapshot 1`] = `
+<div
+  className="item"
+>
+  <h3
+    className="title"
+    onClick={[Function]}
+  >
+    title
+  </h3>
+</div>
+`;
