@@ -10,7 +10,8 @@ describe('Location', () => {
     nearestPt: [],
     distance: 0,
     loading: false,
-    fetchBorder: jest.fn()
+    fetchBorder: jest.fn(),
+    fetchIntro: jest.fn(),
   }
   beforeEach(() => {
     wrapper = shallow(<Location {...mockProps}/>)
