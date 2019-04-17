@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './_Nav.scss'
+import PropTypes from 'prop-types'
 
 export const Nav = ( {getRights, getScenarios, getHelp, getLocation} ) => {
   return (
@@ -37,4 +38,10 @@ export const Nav = ( {getRights, getScenarios, getHelp, getLocation} ) => {
   )
 }
 
+Nav.propTypes = {
+  getRights: PropTypes.func,
+  getScenarios: PropTypes.func,
+  getHelp: PropTypes.func,
+  getLocation: PropTypes.func
+}
 export default Nav

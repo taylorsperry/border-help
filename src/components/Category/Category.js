@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Item from '../Item/Item'
 import './_Category.scss'
+import PropTypes from 'prop-types'
 
 export class Category extends Component {
  render() {
@@ -20,4 +21,9 @@ export class Category extends Component {
 }
 }
 
+Category.propTypes = {
+  catName: PropTypes.string,
+  data: PropTypes.array,
+  callFetch: PropTypes.func,
+}
 export default Category

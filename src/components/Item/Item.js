@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Paragraph from '../Paragraph/Paragraph'
 import shortid from 'shortid'
+// import PropTypes from 'prop-types'
 
 export class Item extends Component {
   constructor(props) {
@@ -35,5 +36,9 @@ export class Item extends Component {
     )
   }
 }
+
+// Item.propTypes = {
+//   item: PropTypes.object,
+// }
 
 export default Item
