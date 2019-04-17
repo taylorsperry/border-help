@@ -3,6 +3,7 @@ import { Map as LeafletMap, TileLayer, Marker, GeoJSON } from 'react-leaflet'
 import { connect } from 'react-redux'
 import { fetchBorder } from '../../thunks/fetchBorder.js'
 import './_Location.scss';
+import PropTypes from 'prop-types'
 
 export class Location extends Component {
   constructor() {
@@ -78,7 +79,7 @@ export class Location extends Component {
           />
     }
 
-    if(this.props.loading || !this.state.nearestPt.length) {
+    if(this.props.loading || !this.state.nearestPt.length ) {
       loading = <p>Loading ...</p>
     }
     
@@ -112,5 +113,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchBorder: (url) => dispatch(fetchBorder(url))
 })
+
+Location.propTypes = {
+  border: PropTypes.array,
+  loading: PropTypes.bool,
+  fetchBorder: PropTypes.func
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Location)

@@ -11,6 +11,7 @@ import { fetchScenarios } from '../../thunks/fetchScenarios'
 import { fetchHelp } from '../../thunks/fetchHelp'
 import { fetchIntro } from '../../thunks/fetchIntro'
 import Error from '../../components/Error/Error'
+import PropTypes from 'prop-types'
 
 export class App extends Component {
 
@@ -72,15 +73,15 @@ export class App extends Component {
               />
             <Route 
               exact path='/rights'
-              render={() => <Category catName='Your Rights' data={rights} callFetch={this.getRights} />}
+              render={() => <Category key='rights' catName='Your Rights' data={rights} callFetch={this.getRights} />}
             />
             <Route 
               exact path='/what-to-do'
-              render={() => <Category catName='What to do if . . . ' data={scenarios} callFetch={this.getScenarios} />}
+              render={() => <Category key='scen' catName='What to do if . . . ' data={scenarios} callFetch={this.getScenarios} />}
             />
             <Route 
               exact path='/help'
-              render={() => <Category catName='Help' data={help} callFetch={this.getHelp} />}
+              render={() => <Category key='help' catName='Help' data={help} callFetch={this.getHelp} />}
             />
             <Route 
               exact path='/location'
@@ -107,5 +108,16 @@ export const mapDispatchToProps = (dispatch) => ({
   fetchScenarios: (url) => dispatch(fetchScenarios(url)),
   fetchHelp: (url) => dispatch(fetchHelp(url))
 })
+
+App.propTypes = {
+  intro: PropTypes.array,
+  rights: PropTypes.array,
+  scenarios: PropTypes.array,
+  help: PropTypes.array,
+  fetchIntro: PropTypes.func,
+  fetchRights: PropTypes.func,
+  fetchScenarios: PropTypes.func,
+  fetchHelp: PropTypes.func
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
