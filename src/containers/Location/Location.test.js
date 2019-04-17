@@ -1,15 +1,14 @@
 import React from 'react'
 import { Location } from './Location'
-import { fetchBorder } from '../../thunks/fetchBorder'
 import { shallow } from 'enzyme'
-// import * as helper for, './helper.js
-// helper.getLocation = jest.fn(() => returns the info you need)
-jest.mock('../../thunks/fetchBorder')
 
 describe('Location', () => {
   let wrapper
   let mockProps = {
-    border: [[0,1], [2,3]],
+    border: [0, 1],
+    location: [1, 2],
+    nearestPt: [],
+    distance: 0,
     loading: false,
     fetchBorder: jest.fn()
   }
@@ -28,6 +27,30 @@ describe('Location', () => {
       const spy = jest.spyOn(wrapper.instance(), 'getBorder')
       wrapper.instance().componentDidMount()
       expect(spy).toHaveBeenCalled()
+    })
+  })
+
+  describe('setData', () => {
+
+    it.skip('should update state when setData is called', () => {
+      let initialState = {
+        nearestPt: [],
+        distance: 0,
+        loading: true,
+      }
+      
+      wrapper.setState(initialState)
+      let nearestPt = [43, 34]
+      let mockDist = 100
+      wrapper.instance().setData(nearestPt)
+  
+      let expectedState = {
+        nearestPt: nearestPt,
+        distance: mockDist,
+        loading: false
+      }
+  
+      expect(wrapper.state()).toEqual(expectedState)
     })
   })
 })
