@@ -24,7 +24,7 @@ BorderHelp is an app that describes an individual’s rights and options when he
 
 The page loads with an introduction to CBP and a user can click on 'Your Rights' to see a list of rights; 'What to Do' to see a list of options for a given scenario; 'Help' for resources; and 'Location' to see where they are on the map and how far they are from the border between the US and Mexico. 
 
-For this project I built an API using node and express (with data sourced from the ACLU) and utilized the 'Mexico and US Border' API from Homeland Infrastructure Foundation-Level Data (HIFLD) and geolocation.
+For this project I built an API using node and express (with data sourced from the ACLU) and utilized the 'Mexico and US Border' API from Homeland Infrastructure Foundation-Level Data (HIFLD) and geolocation. In the future, I'd like to internationalize the application for Spanish. 
 
 ## Tech Stack
 
@@ -46,5 +46,5 @@ For this project I built an API using node and express (with data sourced from t
 
 ## Wireframe
 
-
+<img width="369" alt="Screen Shot 2019-04-16 at 11 45 35 PM" src="https://user-images.githubusercontent.com/43555476/56263861-ce616000-60a1-11e9-8273-4848e62f7914.png">
 
