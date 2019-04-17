@@ -6,7 +6,7 @@ import { shallow } from 'enzyme'
 // helper.getLocation = jest.fn(() => returns the info you need)
 jest.mock('../../thunks/fetchBorder')
 
-describe.skip('Location', () => {
+describe('Location', () => {
   let wrapper
   let mockProps = {
     border: [[0,1], [2,3]],
@@ -24,8 +24,8 @@ describe.skip('Location', () => {
 
   describe('componentDidMount', () => {
 
-    it('should call getLocation', () => {
-      const spy = jest.spyOn(wrapper.instance(), 'getLocation')
+    it('should call getBorder', () => {
+      const spy = jest.spyOn(wrapper.instance(), 'getBorder')
       wrapper.instance().componentDidMount()
       expect(spy).toHaveBeenCalled()
     })

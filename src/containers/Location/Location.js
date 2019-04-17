@@ -12,11 +12,11 @@ export class Location extends Component {
       location: [40.650002, -73.949997],
       nearestPt: [],
       distance: 0,
+      loading: false,
     }
   }
 
   componentDidMount() {
-    this.getLocation()
     this.getBorder()
   }
 
@@ -25,15 +25,15 @@ export class Location extends Component {
       const longitude = await position.coords.longitude
       const latitude =  await position.coords.latitude
       this.setState({
-        location: [latitude, longitude]
-      });
+        location: [latitude, longitude],
+        loading: true,
+      }, () => this.findNearest());
     })
   }
 
   getBorder = async () => {
     const url = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Mexico_and_US_Border/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'
     await this.props.fetchBorder(url)
-    this.findNearest()
   }
 
   findNearest = () => {
@@ -51,7 +51,8 @@ export class Location extends Component {
     let distance = Math.ceil(nearestPt.dist)
     this.setState({
       nearestPt: nearestPt.coord,
-      distance: distance
+      distance: distance,
+      loading: false
     })
   }
   
@@ -79,12 +80,13 @@ export class Location extends Component {
           />
     }
 
-    if(this.props.loading || !this.state.nearestPt.length ) {
+    if(this.props.loading || this.state.loading ) {
       loading = <p>Loading ...</p>
     }
     
     return (
       <div className='map-container'>
+        <button className='loc-btn' onClick={this.getLocation}>Find Your Location</button>
         {loading}
         {msg}
         <LeafletMap

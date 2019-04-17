@@ -65,7 +65,7 @@ export class App extends Component {
             path='/'
             render={() => <Nav getRights={this.getRights} getScenarios={this.getScenarios} getHelp={this.getHelp} />}
           />
-          <div className='container'>
+        <div className='container'>
           <Switch>
             <Route 
               exact path='/'

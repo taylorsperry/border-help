@@ -1,3 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Location should match the snapshot 1`] = `undefined`;
+exports[`Location should match the snapshot 1`] = `
+<div
+  className="map-container"
+>
+  <button
+    className="loc-btn"
+    onClick={[Function]}
+  >
+    Find Your Location
+  </button>
+  <Map
+    center={
+      Array [
+        40.650002,
+        -73.949997,
+      ]
+    }
+    id="map"
+    zoom="4"
+  >
+    <ForwardRef(Leaflet(GeoJSON))
+      data={
+        Object {
+          "coordinates": Array [
+            Array [
+              0,
+              1,
+            ],
+            Array [
+              2,
+              3,
+            ],
+          ],
+          "type": "LineString",
+        }
+      }
+    />
+    <ForwardRef(Leaflet(TileLayer))
+      url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+    />
+    <ForwardRef(Leaflet(Marker))
+      position={
+        Array [
+          40.650002,
+          -73.949997,
+        ]
+      }
+    />
+  </Map>
+</div>
+`;

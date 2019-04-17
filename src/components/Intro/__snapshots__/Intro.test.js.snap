@@ -10,10 +10,15 @@ exports[`Intro should match the snapshot 1`] = `
     Introduction
   </h2>
   <Paragraph
-    key="auL322_5K"
+    key="a66h8v2PN"
   />
   <Paragraph
-    key="3UqU5hMFVw"
+    key="FBLlYWl3SF"
   />
+  <p
+    className="footer"
+  >
+    Data collected from the ACLU
+  </p>
 </div>
 `;
