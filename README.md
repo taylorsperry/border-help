@@ -43,8 +43,3 @@ For this project I built an API using node and express (with data sourced from t
 <img width="1044" alt="Screen Shot 2019-04-16 at 11 41 37 PM" src="https://user-images.githubusercontent.com/43555476/56263760-775b8b00-60a1-11e9-8236-8a7c84c4689f.png">
 <img width="1043" alt="Screen Shot 2019-04-16 at 11 41 10 PM" src="https://user-images.githubusercontent.com/43555476/56263761-7a567b80-60a1-11e9-9e0b-ee9b58f2b56f.png">
 
-
-## Wireframe
-
-<img width="369" alt="Screen Shot 2019-04-16 at 11 45 35 PM" src="https://user-images.githubusercontent.com/43555476/56263861-ce616000-60a1-11e9-8273-4848e62f7914.png">
-
